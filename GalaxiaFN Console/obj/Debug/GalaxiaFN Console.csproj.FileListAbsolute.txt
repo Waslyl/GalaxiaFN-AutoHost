@@ -1,0 +1,7 @@
+D:\VS-VS CODE\GalaxiaFN Console\GalaxiaFN Console\bin\Debug\GalaxiaFN Console.exe.config
+D:\VS-VS CODE\GalaxiaFN Console\GalaxiaFN Console\bin\Debug\GalaxiaFN Console.exe
+D:\VS-VS CODE\GalaxiaFN Console\GalaxiaFN Console\bin\Debug\GalaxiaFN Console.pdb
+D:\VS-VS CODE\GalaxiaFN Console\GalaxiaFN Console\obj\Debug\GalaxiaFN Console.csproj.AssemblyReference.cache
+D:\VS-VS CODE\GalaxiaFN Console\GalaxiaFN Console\obj\Debug\GalaxiaFN Console.csproj.CoreCompileInputs.cache
+D:\VS-VS CODE\GalaxiaFN Console\GalaxiaFN Console\obj\Debug\GalaxiaFN Console.exe
+D:\VS-VS CODE\GalaxiaFN Console\GalaxiaFN Console\obj\Debug\GalaxiaFN Console.pdb
