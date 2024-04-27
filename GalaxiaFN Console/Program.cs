@@ -19,6 +19,8 @@ namespace GalaxiaFN_Console
         static SetConsoleCtrlEventHandler _handler;
         static void Main(string[] args)
         {
+            Console.Title = "GalaxiaFN Console Launcher";
+
             Console.ForegroundColor = ConsoleColor.Green; Console.WriteLine("[+] Bienvenue sur GalaxiaFN Console, un programme pour lancer des anciennes Saisons de Fortnite et pour jouer dessus.\n Ce programme à été programmer par Waslyl\n");
 
             Console.ForegroundColor = ConsoleColor.White; Console.WriteLine("[?] Que voulez vous faire?\n");
