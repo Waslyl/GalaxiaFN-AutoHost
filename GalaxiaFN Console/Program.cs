@@ -58,6 +58,7 @@ namespace GalaxiaFN_Console
                     Environment.Exit(0);
                 }*/
             }
+            
             if (output.ToLower() == "1")
             {
                 Console.WriteLine("Quel pseudo voulez vous mettre?");
