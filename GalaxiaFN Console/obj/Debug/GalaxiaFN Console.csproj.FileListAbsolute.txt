@@ -15,3 +15,13 @@ C:\Users\samwa\Documents\GitHub\GalaxiaFN-Console\GalaxiaFN Console\obj\Debug\Ga
 C:\Users\samwa\Documents\GitHub\GalaxiaFN-Console\GalaxiaFN Console\bin\Debug\INIFileParser.dll
 C:\Users\samwa\Documents\GitHub\GalaxiaFN-Console\GalaxiaFN Console\bin\Debug\INIFileParser.xml
 C:\Users\samwa\Documents\GitHub\GalaxiaFN-Console\GalaxiaFN Console\obj\Debug\GalaxiaF.5B636DC8.Up2Date
+C:\Users\Was\Documents\GitHub\GalaxiaFN-Console\GalaxiaFN Console\bin\Debug\GalaxiaFN Console.exe.config
+C:\Users\Was\Documents\GitHub\GalaxiaFN-Console\GalaxiaFN Console\bin\Debug\GalaxiaFN Console.exe
+C:\Users\Was\Documents\GitHub\GalaxiaFN-Console\GalaxiaFN Console\bin\Debug\GalaxiaFN Console.pdb
+C:\Users\Was\Documents\GitHub\GalaxiaFN-Console\GalaxiaFN Console\bin\Debug\INIFileParser.dll
+C:\Users\Was\Documents\GitHub\GalaxiaFN-Console\GalaxiaFN Console\bin\Debug\INIFileParser.xml
+C:\Users\Was\Documents\GitHub\GalaxiaFN-Console\GalaxiaFN Console\obj\Debug\GalaxiaFN Console.csproj.AssemblyReference.cache
+C:\Users\Was\Documents\GitHub\GalaxiaFN-Console\GalaxiaFN Console\obj\Debug\GalaxiaFN Console.csproj.CoreCompileInputs.cache
+C:\Users\Was\Documents\GitHub\GalaxiaFN-Console\GalaxiaFN Console\obj\Debug\GalaxiaF.5B636DC8.Up2Date
+C:\Users\Was\Documents\GitHub\GalaxiaFN-Console\GalaxiaFN Console\obj\Debug\GalaxiaFN Console.exe
+C:\Users\Was\Documents\GitHub\GalaxiaFN-Console\GalaxiaFN Console\obj\Debug\GalaxiaFN Console.pdb
