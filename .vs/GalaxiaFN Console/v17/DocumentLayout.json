@@ -1,20 +1,20 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\Users\\Was\\Documents\\GitHub\\GalaxiaFN-Console\\",
+  "WorkspaceRootPath": "C:\\Users\\samwa\\Documents\\GitHub\\GalaxiaFN-Console\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{0AAEFBBF-1326-4FD5-8AAF-E3175FF9A9A8}|GalaxiaFN Console\\GalaxiaFN Console.csproj|c:\\users\\was\\documents\\github\\galaxiafn-console\\galaxiafn console\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{0AAEFBBF-1326-4FD5-8AAF-E3175FF9A9A8}|GalaxiaFN Console\\GalaxiaFN Console.csproj|c:\\users\\samwa\\documents\\github\\galaxiafn-console\\galaxiafn console\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{0AAEFBBF-1326-4FD5-8AAF-E3175FF9A9A8}|GalaxiaFN Console\\GalaxiaFN Console.csproj|solutionrelative:galaxiafn console\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{0AAEFBBF-1326-4FD5-8AAF-E3175FF9A9A8}|GalaxiaFN Console\\GalaxiaFN Console.csproj|C:\\Users\\Was\\Documents\\GitHub\\GalaxiaFN-Console\\galaxiafn console\\processhelper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{0AAEFBBF-1326-4FD5-8AAF-E3175FF9A9A8}|GalaxiaFN Console\\GalaxiaFN Console.csproj|C:\\Users\\samwa\\Documents\\GitHub\\GalaxiaFN-Console\\galaxiafn console\\processhelper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{0AAEFBBF-1326-4FD5-8AAF-E3175FF9A9A8}|GalaxiaFN Console\\GalaxiaFN Console.csproj|solutionrelative:galaxiafn console\\processhelper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Was\\Documents\\GitHub\\Galaxia-Launcher-Main\\Galaxia Launcher\\Service\\ProcessHelper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{0AAEFBBF-1326-4FD5-8AAF-E3175FF9A9A8}|GalaxiaFN Console\\GalaxiaFN Console.csproj|C:\\Users\\Was\\Documents\\GitHub\\GalaxiaFN-Console\\galaxiafn console\\processextension.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{0AAEFBBF-1326-4FD5-8AAF-E3175FF9A9A8}|GalaxiaFN Console\\GalaxiaFN Console.csproj|C:\\Users\\samwa\\Documents\\GitHub\\GalaxiaFN-Console\\galaxiafn console\\processextension.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{0AAEFBBF-1326-4FD5-8AAF-E3175FF9A9A8}|GalaxiaFN Console\\GalaxiaFN Console.csproj|solutionrelative:galaxiafn console\\processextension.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
@@ -28,25 +28,17 @@
           "SelectedChildIndex": 3,
           "Children": [
             {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "ProcessExtension.cs",
-              "DocumentMoniker": "C:\\Users\\Was\\Documents\\GitHub\\GalaxiaFN-Console\\GalaxiaFN Console\\ProcessExtension.cs",
-              "RelativeDocumentMoniker": "GalaxiaFN Console\\ProcessExtension.cs",
-              "ToolTip": "C:\\Users\\Was\\Documents\\GitHub\\GalaxiaFN-Console\\GalaxiaFN Console\\ProcessExtension.cs",
-              "RelativeToolTip": "GalaxiaFN Console\\ProcessExtension.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAABEAAAAXAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-17T11:32:08.692Z"
+              "$type": "Bookmark",
+              "Name": "ST:130:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
             },
             {
               "$type": "Document",
               "DocumentIndex": 2,
               "Title": "ProcessHelper.cs",
               "DocumentMoniker": "C:\\Users\\Was\\Documents\\GitHub\\Galaxia-Launcher-Main\\Galaxia Launcher\\Service\\ProcessHelper.cs",
-              "RelativeDocumentMoniker": "..\\Galaxia-Launcher-Main\\Galaxia Launcher\\Service\\ProcessHelper.cs",
+              "RelativeDocumentMoniker": "..\\..\\..\\..\\Was\\Documents\\GitHub\\Galaxia-Launcher-Main\\Galaxia Launcher\\Service\\ProcessHelper.cs",
               "ToolTip": "C:\\Users\\Was\\Documents\\GitHub\\Galaxia-Launcher-Main\\Galaxia Launcher\\Service\\ProcessHelper.cs",
-              "RelativeToolTip": "..\\Galaxia-Launcher-Main\\Galaxia Launcher\\Service\\ProcessHelper.cs",
+              "RelativeToolTip": "..\\..\\..\\..\\Was\\Documents\\GitHub\\Galaxia-Launcher-Main\\Galaxia Launcher\\Service\\ProcessHelper.cs",
               "ViewState": "AQIAACYAAAAAAAAAAAAswC8AAAAjAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-06-17T11:31:02.643Z"
@@ -55,9 +47,9 @@
               "$type": "Document",
               "DocumentIndex": 1,
               "Title": "ProcessHelper.cs",
-              "DocumentMoniker": "C:\\Users\\Was\\Documents\\GitHub\\GalaxiaFN-Console\\GalaxiaFN Console\\ProcessHelper.cs",
+              "DocumentMoniker": "C:\\Users\\samwa\\Documents\\GitHub\\GalaxiaFN-Console\\GalaxiaFN Console\\ProcessHelper.cs",
               "RelativeDocumentMoniker": "GalaxiaFN Console\\ProcessHelper.cs",
-              "ToolTip": "C:\\Users\\Was\\Documents\\GitHub\\GalaxiaFN-Console\\GalaxiaFN Console\\ProcessHelper.cs",
+              "ToolTip": "C:\\Users\\samwa\\Documents\\GitHub\\GalaxiaFN-Console\\GalaxiaFN Console\\ProcessHelper.cs",
               "RelativeToolTip": "GalaxiaFN Console\\ProcessHelper.cs",
               "ViewState": "AQIAAAMAAAAAAAAAAAAAABYAAAAcAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -68,14 +60,26 @@
               "$type": "Document",
               "DocumentIndex": 0,
               "Title": "Program.cs",
-              "DocumentMoniker": "C:\\Users\\Was\\Documents\\GitHub\\GalaxiaFN-Console\\GalaxiaFN Console\\Program.cs",
+              "DocumentMoniker": "C:\\Users\\samwa\\Documents\\GitHub\\GalaxiaFN-Console\\GalaxiaFN Console\\Program.cs",
               "RelativeDocumentMoniker": "GalaxiaFN Console\\Program.cs",
-              "ToolTip": "C:\\Users\\Was\\Documents\\GitHub\\GalaxiaFN-Console\\GalaxiaFN Console\\Program.cs",
+              "ToolTip": "C:\\Users\\samwa\\Documents\\GitHub\\GalaxiaFN-Console\\GalaxiaFN Console\\Program.cs",
               "RelativeToolTip": "GalaxiaFN Console\\Program.cs",
-              "ViewState": "AQIAAOAAAAAAAAAAAAAvwPIAAAAAAAAA",
+              "ViewState": "AQIAAO0AAAAAAAAAAAAcwOEAAAA1AAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-04-25T08:04:42.287Z",
               "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "ProcessExtension.cs",
+              "DocumentMoniker": "C:\\Users\\samwa\\Documents\\GitHub\\GalaxiaFN-Console\\GalaxiaFN Console\\ProcessExtension.cs",
+              "RelativeDocumentMoniker": "GalaxiaFN Console\\ProcessExtension.cs",
+              "ToolTip": "C:\\Users\\samwa\\Documents\\GitHub\\GalaxiaFN-Console\\GalaxiaFN Console\\ProcessExtension.cs",
+              "RelativeToolTip": "GalaxiaFN Console\\ProcessExtension.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABEAAAAXAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-17T11:32:08.692Z"
             }
           ]
         }
