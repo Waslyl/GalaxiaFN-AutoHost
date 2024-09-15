@@ -5,10 +5,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{0AAEFBBF-1326-4FD5-8AAF-E3175FF9A9A8}|GalaxiaFN Console\\GalaxiaFN Console.csproj|c:\\users\\samwa\\documents\\github\\galaxiafn-console\\galaxiafn console\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{0AAEFBBF-1326-4FD5-8AAF-E3175FF9A9A8}|GalaxiaFN Console\\GalaxiaFN Console.csproj|solutionrelative:galaxiafn console\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{0AAEFBBF-1326-4FD5-8AAF-E3175FF9A9A8}|GalaxiaFN Console\\GalaxiaFN Console.csproj|c:\\users\\samwa\\documents\\github\\galaxiafn-console\\galaxiafn console\\properties\\settings.settings||{6D2695F9-5365-4A78-89ED-F205C045BFE6}",
-      "RelativeMoniker": "D:0:0:{0AAEFBBF-1326-4FD5-8AAF-E3175FF9A9A8}|GalaxiaFN Console\\GalaxiaFN Console.csproj|solutionrelative:galaxiafn console\\properties\\settings.settings||{6D2695F9-5365-4A78-89ED-F205C045BFE6}"
     }
   ],
   "DocumentGroupContainers": [
@@ -18,23 +14,11 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 2,
+          "SelectedChildIndex": 1,
           "Children": [
             {
               "$type": "Bookmark",
               "Name": "ST:130:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "Settings.settings",
-              "DocumentMoniker": "C:\\Users\\samwa\\Documents\\GitHub\\GalaxiaFN-Console\\GalaxiaFN Console\\Properties\\Settings.settings",
-              "RelativeDocumentMoniker": "GalaxiaFN Console\\Properties\\Settings.settings",
-              "ToolTip": "C:\\Users\\samwa\\Documents\\GitHub\\GalaxiaFN-Console\\GalaxiaFN Console\\Properties\\Settings.settings",
-              "RelativeToolTip": "GalaxiaFN Console\\Properties\\Settings.settings",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.002767|",
-              "WhenOpened": "2024-09-01T17:01:05.926Z",
-              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -44,7 +28,7 @@
               "RelativeDocumentMoniker": "GalaxiaFN Console\\Program.cs",
               "ToolTip": "C:\\Users\\samwa\\Documents\\GitHub\\GalaxiaFN-Console\\GalaxiaFN Console\\Program.cs",
               "RelativeToolTip": "GalaxiaFN Console\\Program.cs",
-              "ViewState": "AQIAAM0AAAAAAAAAAAAwwOAAAAAqAAAA",
+              "ViewState": "AQIAAOMAAAAAAAAAAAAkwPYAAAAxAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-04-25T08:04:42.287Z",
               "EditorCaption": ""
