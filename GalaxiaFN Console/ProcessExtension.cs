@@ -2,7 +2,7 @@
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 
-namespace GalaxiaFN_Console
+namespace GalaxiaFN_AutoRestart
 {
     static class ProcessExtension
     {

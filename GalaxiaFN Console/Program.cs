@@ -3,16 +3,13 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Net.Sockets;
-using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
-using GalaxiaFN_Console.Properties;
 using IniParser;
 using IniParser.Model;
 
-namespace GalaxiaFN_Console
+namespace GalaxiaFN_AutoRestart
 {
     internal class Program
     {
@@ -23,7 +20,9 @@ namespace GalaxiaFN_Console
         static Dictionary<string, (string Path, string Username, string Password)> seasons = new Dictionary<string, (string, string, string)>();
 
 
-        public static void SafeKillProcess(string processName)
+        //Kill Process pour restart le GS
+        //Kill Process for restart the GS
+        public static void SafeKillProcess(string processName) 
         {
             try
             {
@@ -62,6 +61,8 @@ namespace GalaxiaFN_Console
                 }
                 else
                 {
+                    //Choisir l'action à faire
+                    //Choose which action to do
                     Console.WriteLine("Veuillez répondre uniquement par 0, 1 ou 2");
                     Thread.Sleep(2000);
                     Console.Clear();
@@ -83,26 +84,26 @@ namespace GalaxiaFN_Console
         static void AddSeason()
         {
             Console.Clear();
-            Console.WriteLine("Veuillez mettre le chemin de votre version ici:");
+            Console.WriteLine("Veuillez mettre le chemin de votre version ici:"); //Path
             Console.Write(">> ");
             string path = Console.ReadLine();
 
-            Console.WriteLine("Veuillez donner un nom pour cette saison:");
+            Console.WriteLine("Veuillez donner un nom pour cette saison:"); //Name
             Console.Write(">> ");
             string name = Console.ReadLine();
 
-            Console.WriteLine("Quel email voulez-vous mettre?");
+            Console.WriteLine("Quel email voulez-vous mettre?"); //Email (pseudo@. if on lawinV1)
             Console.Write(">> ");
             string email = Console.ReadLine();
 
-            Console.WriteLine("Quel mot de passe voulez-vous ajouter?");
+            Console.WriteLine("Quel mot de passe voulez-vous ajouter?"); //Password (whatever you want if on lawinV1)
             Console.Write(">> ");
             string password = Console.ReadLine();
 
             seasons[name] = (path, email, password);
             SaveSeasons();
 
-            Console.WriteLine("Votre chemin, pseudo et mot de passe ont bien été enregistrés correctement!");
+            Console.WriteLine("Votre chemin, pseudo et mot de passe ont bien été enregistrés correctement!"); //Everything is saved in seasons.ini
             Console.Clear();
         }
 
@@ -121,19 +122,20 @@ namespace GalaxiaFN_Console
                 Console.WriteLine($"- {season}");
             }
 
-            Console.WriteLine("Veuillez sélectionner la saison que vous voulez lancer par son nom:");
+            Console.WriteLine("Veuillez séléctionner la saison que vous voulez lancer par son nom:");
             Console.Write(">> ");
             string selectedSeason = Console.ReadLine();
 
             if (seasons.ContainsKey(selectedSeason))
             {
+                Console.Clear();
                 var season = seasons[selectedSeason];
                 Console.WriteLine($"Lancement de la saison: {selectedSeason} avec le chemin: {season.Path}");
 
                 while (true)
                 {
                     LaunchGameInstance(season);
-                    Thread.Sleep(5000); // Attendre 5 secondes avant de relancer
+                    Thread.Sleep(2000); // Attendre 2 secondes avant de relancer   Wait 2 seconds before restarting
                 }
             }
             else
@@ -167,7 +169,7 @@ namespace GalaxiaFN_Console
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Injection failed: {ex.Message}");
+                Console.WriteLine($"Injection failed: {ex.Message}"); //retour d'erreur  Callback error
             }
         }
 
@@ -211,7 +213,7 @@ namespace GalaxiaFN_Console
                 
                 Process injector = new Process();
                 injector.StartInfo.FileName = $@"{idkkk}\\inj\\injector.exe";
-                injector.StartInfo.Arguments = $@"-p {Fortnite.Id} -i redirect.dll ";
+                injector.StartInfo.Arguments = $@"-p {Fortnite.Id} -i redirect.dll "; // remplacer son ssl bypass dans \inj\redirect.dll  Replace your ssl in \inj\redirect.dll
                 injector.StartInfo.CreateNoWindow = true; injector.StartInfo.RedirectStandardOutput = false;
                 injector.StartInfo.UseShellExecute = false;
                 injector.StartInfo.WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden;
@@ -222,19 +224,17 @@ namespace GalaxiaFN_Console
                 {
                     if (outputLine.Contains("Region "))
                     {
-                        Thread.Sleep(60000);
+                        Thread.Sleep(3500);
 
                         Process inj = new Process();
                         inj.StartInfo.FileName = $@"{idkkk}\\inj\\injector.exe";
-                        inj.StartInfo.Arguments = $@"-p {Fortnite.Id} -i gameserver.dll ";
+                        inj.StartInfo.Arguments = $@"-p {Fortnite.Id} -i gameserver.dll "; // remplacer son ssl dans \inj\gameserver.dll  Replace your ssl in \inj\gameserver.dll
                         inj.StartInfo.CreateNoWindow = true; inj.StartInfo.RedirectStandardOutput = false;
                         inj.StartInfo.UseShellExecute = false;
                         inj.StartInfo.WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden;
-                        inj.Start(); //inject redirect dll
+                        inj.Start();
 
-                        //ProcessHelper.InjectDll(Fortnite.Id, Path.Combine(Directory.GetCurrentDirectory(), "gameserver.dll"));
-
-                        Console.WriteLine("Le dll a ete injecte");
+                        Console.WriteLine("Le dll a été injecte");
                     }
                 }
 
@@ -256,7 +256,7 @@ namespace GalaxiaFN_Console
                 SafeKillProcess("FortniteClient-Win64-Shipping");
                 SafeKillProcess("EasyAntiCheat_EOS");
                 SafeKillProcess("EasyAntiCheat_Launcher");
-                Console.WriteLine("Le jeu s'est terminé. Relance en cours...");
+                Console.WriteLine("La game est fini. Restart...");
             }
             catch (Exception ex)
             {
@@ -297,6 +297,7 @@ namespace GalaxiaFN_Console
             Console.Clear();
         }
 
+        //ini-parser seasons.ini
         static void LoadSeasons()
         {
             if (File.Exists("seasons.ini"))
@@ -316,6 +317,7 @@ namespace GalaxiaFN_Console
             }
         }
 
+        //ini-parser seasons.ini
         static void SaveSeasons()
         {
             var parser = new FileIniDataParser();

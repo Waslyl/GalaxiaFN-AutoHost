@@ -5,7 +5,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GalaxiaFN_Console
+namespace GalaxiaFN_AutoRestart
 {
     internal class Win32
     {

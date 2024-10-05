@@ -1,0 +1,10 @@
+C:\Users\samwa\Documents\GitHub\GalaxiaFN-Console\GalaxiaFN Console\bin\Debug\GalaxiaFN AutoRestart.exe.config
+C:\Users\samwa\Documents\GitHub\GalaxiaFN-Console\GalaxiaFN Console\bin\Debug\GalaxiaFN AutoRestart.exe
+C:\Users\samwa\Documents\GitHub\GalaxiaFN-Console\GalaxiaFN Console\bin\Debug\GalaxiaFN AutoRestart.pdb
+C:\Users\samwa\Documents\GitHub\GalaxiaFN-Console\GalaxiaFN Console\bin\Debug\INIFileParser.dll
+C:\Users\samwa\Documents\GitHub\GalaxiaFN-Console\GalaxiaFN Console\bin\Debug\INIFileParser.xml
+C:\Users\samwa\Documents\GitHub\GalaxiaFN-Console\GalaxiaFN Console\obj\Debug\GalaxiaFN AutoRestart.csproj.AssemblyReference.cache
+C:\Users\samwa\Documents\GitHub\GalaxiaFN-Console\GalaxiaFN Console\obj\Debug\GalaxiaFN AutoRestart.csproj.CoreCompileInputs.cache
+C:\Users\samwa\Documents\GitHub\GalaxiaFN-Console\GalaxiaFN Console\obj\Debug\GalaxiaF.CCC7F856.Up2Date
+C:\Users\samwa\Documents\GitHub\GalaxiaFN-Console\GalaxiaFN Console\obj\Debug\GalaxiaFN AutoRestart.exe
+C:\Users\samwa\Documents\GitHub\GalaxiaFN-Console\GalaxiaFN Console\obj\Debug\GalaxiaFN AutoRestart.pdb
