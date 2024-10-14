@@ -1,7 +1,8 @@
 # Fortnite Autohost Emulator
 
 This program was made for Fortnite players to be able to play the old game with a launcher that can emulate the old game file to the new one
-If a Epic Games employee want to contact me, they can contact me with discord: Waslyl
+
+If an Epic Games employee want to contact me, they can contact me with discord: Waslyl
 
 # IMPORTANT
 !!! It is needed to add a function on your gameserver to make it crash at the end of the game so the autorestart will notice that to restart the client
