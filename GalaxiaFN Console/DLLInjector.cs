@@ -1,45 +1,20 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace GalaxiaFN_AutoRestart
 {
-    internal class ProcessHelper
+    internal class Win32
     {
-        public static Process StartProcess(string path, bool shouldFreeze, string extraArgs = "")
-        {
-            Process process = new Process
-            {
-                StartInfo = new ProcessStartInfo
-                {
-                    FileName = path,
-                    Arguments = "-epicapp=Fortnite -epicenv=Prod -epiclocale=en-us -epicportal -nobe -fromfl=eac -fltoken=2725i0h34666525d51b022h3 " + extraArgs
-                }
-            };
-            process.Start();
-            if (shouldFreeze)
-            {
-                foreach (object obj in process.Threads)
-                {
-                    ProcessThread processThread = (ProcessThread)obj;
-                    ProcessHelper.SuspendThread(ProcessHelper.OpenThread(2, false, processThread.Id));
-                }
-            }
-            return process;
-        }
         public static void InjectDll(int processId, string path)
         {
-            IntPtr hProcess = ProcessHelper.OpenProcess(1082, false, processId);
-            IntPtr procAddress = ProcessHelper.GetProcAddress(ProcessHelper.GetModuleHandle("kernel32.dll"), "LoadLibraryA");
+            IntPtr hProcess = Win32.OpenProcess(1082, false, processId);
+            IntPtr procAddress = Win32.GetProcAddress(Win32.GetModuleHandle("kernel32.dll"), "LoadLibraryA");
             uint num = (uint)((path.Length + 1) * Marshal.SizeOf(typeof(char)));
-            IntPtr intPtr = ProcessHelper.VirtualAllocEx(hProcess, IntPtr.Zero, num, 12288U, 4U);
+            IntPtr intPtr = Win32.VirtualAllocEx(hProcess, IntPtr.Zero, num, 12288U, 4U);
             UIntPtr uintPtr;
-            ProcessHelper.WriteProcessMemory(hProcess, intPtr, Encoding.Default.GetBytes(path), num, out uintPtr);
-            ProcessHelper.CreateRemoteThread(hProcess, IntPtr.Zero, 0U, procAddress, intPtr, 0U, IntPtr.Zero);
+            Win32.WriteProcessMemory(hProcess, intPtr, Encoding.Default.GetBytes(path), num, out uintPtr);
+            Win32.CreateRemoteThread(hProcess, IntPtr.Zero, 0U, procAddress, intPtr, 0U, IntPtr.Zero);
         }
         [DllImport("kernel32.dll")]
         public static extern int SuspendThread(IntPtr hThread);

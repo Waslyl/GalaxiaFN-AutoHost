@@ -3,8 +3,8 @@
   "WorkspaceRootPath": "C:\\Users\\samwa\\Documents\\GitHub\\GalaxiaFN-Console\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{0AAEFBBF-1326-4FD5-8AAF-E3175FF9A9A8}|GalaxiaFN Console\\GalaxiaFN Console.csproj|c:\\users\\samwa\\documents\\github\\galaxiafn-console\\galaxiafn console\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{0AAEFBBF-1326-4FD5-8AAF-E3175FF9A9A8}|GalaxiaFN Console\\GalaxiaFN Console.csproj|solutionrelative:galaxiafn console\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{0AAEFBBF-1326-4FD5-8AAF-E3175FF9A9A8}|GalaxiaFN Console\\GalaxiaFN AutoRestart.csproj|c:\\users\\samwa\\documents\\github\\galaxiafn-console\\galaxiafn console\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0AAEFBBF-1326-4FD5-8AAF-E3175FF9A9A8}|GalaxiaFN Console\\GalaxiaFN AutoRestart.csproj|solutionrelative:galaxiafn console\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -28,9 +28,9 @@
               "RelativeDocumentMoniker": "GalaxiaFN Console\\Program.cs",
               "ToolTip": "C:\\Users\\samwa\\Documents\\GitHub\\GalaxiaFN-Console\\GalaxiaFN Console\\Program.cs",
               "RelativeToolTip": "GalaxiaFN Console\\Program.cs",
-              "ViewState": "AgIAADMBAAAAAAAAAAAYwEYBAAANAAAAAAAAAA==",
+              "ViewState": "AgIAAFEBAAAAAAAAAADwv18BAAA7AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-04-25T08:04:42.287Z",
+              "WhenOpened": "2024-10-21T08:51:56.374Z",
               "EditorCaption": ""
             }
           ]

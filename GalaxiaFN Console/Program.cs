@@ -2,9 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
+using System.Reflection;
 using System.Threading;
 using IniParser;
 using IniParser.Model;
@@ -18,11 +16,92 @@ namespace GalaxiaFN_AutoRestart
         static Process FortniteEAC = new Process();
         static Process FortniteLauncher = new Process();
         static Dictionary<string, (string Path, string Username, string Password)> seasons = new Dictionary<string, (string, string, string)>();
+        static string currentLanguage = "en";
+        static String baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
 
+        //Dictionary will be used to add different language support, more languages will be added in the future if I have time :)
+        static Dictionary<string, Dictionary<string, string>> messages = new Dictionary<string, Dictionary<string, string>>
+        {
+            {
+                "en", new Dictionary<string, string>
+                {
+                    { "Welcome", "[+] Welcome to GalaxiaFN Console, a program for launching older Fortnite seasons and playing on them." },
+                    { "AddVersion", "[0] Add a Fortnite version" },
+                    { "LaunchVersion", "[1] Launch a Fortnite version" },
+                    { "RemoveVersion", "[2] Remove a Fortnite version" },
+                    { "SelectAction", "Please respond only with 0, 1, or 2" },
+                    { "AddPath", "Please enter the path to your version:" },
+                    { "AddName", "Please give a name for this season:" },
+                    { "AddEmail", "What email would you like to use?" },
+                    { "AddPassword", "What password would you like to add?" },
+                    { "SaveConfirmation", "Your path, username, and password have been saved successfully!" },
+                    { "NoSeasons", "No seasons have been added." },
+                    { "AvailableSeasons", "Available seasons:" },
+                    { "SelectSeason", "Please select the season you want to launch by name:" },
+                    { "Launching", "Launching season:" },
+                    { "FileNotFound", "The file is not found:" },
+                    { "GameFinished", "The game has ended. Restarting..." },
+                    { "RemoveSeasonPrompt", "Please select the season you want to remove by name:" },
+                    { "RemoveSuccess", "The season has been successfully removed." },
+                    { "SeasonNotFound", "Season not found." },
+                    { "InjectionFailed", "Injection failed:" },
+                    { "LanguageSelection", "Please select your language / Veuillez sélectionner votre langue:" },
+                    { "English", "[1] English" },
+                    { "French", "[2] Français" },
+                    { "DllMoveSuccess", "DLL successfully moved and renamed to the target path." },
+                    { "DllMoveFailed", "Failed to move and rename the DLL to the target path." },
+                    { "RedirectDllInjection", "The SSL have been injected into the game." },
+                    { "RedirectDllInjectionFailed", "The SSL is missing." },
+                    { "GameserverDllInjection", "The Gameserver have been injected into the game." },
+                    { "GameserverDllInjectionFailed", "The Gameserver is missing." },
+                    { "Restart", "The game is finished, restarting..." }
+                }
+            },
+            {
+                "fr", new Dictionary<string, string>
+                {
+                    { "Welcome", "[+] Bienvenue sur GalaxiaFN Console, un programme pour lancer des anciennes saisons de Fortnite et pour jouer dessus." },
+                    { "AddVersion", "[0] Ajouter une version de Fortnite" },
+                    { "LaunchVersion", "[1] Lancer une version de Fortnite" },
+                    { "RemoveVersion", "[2] Supprimer une version de Fortnite" },
+                    { "SelectAction", "Veuillez répondre uniquement par 0, 1 ou 2" },
+                    { "AddPath", "Veuillez mettre le chemin de votre version ici:" },
+                    { "AddName", "Veuillez donner un nom pour cette saison:" },
+                    { "AddEmail", "Quel email voulez-vous mettre?" },
+                    { "AddPassword", "Quel mot de passe voulez-vous ajouter?" },
+                    { "SaveConfirmation", "Votre chemin, pseudo et mot de passe ont bien été enregistrés correctement!" },
+                    { "NoSeasons", "Aucune saison n'a été ajoutée." },
+                    { "AvailableSeasons", "Saisons disponibles:" },
+                    { "SelectSeason", "Veuillez sélectionner la saison que vous voulez lancer par son nom:" },
+                    { "Launching", "Lancement de la saison:" },
+                    { "FileNotFound", "Le fichier est introuvable:" },
+                    { "GameFinished", "La game est finie. Redémarrage..." },
+                    { "RemoveSeasonPrompt", "Veuillez sélectionner la saison que vous voulez supprimer par son nom:" },
+                    { "RemoveSuccess", "La saison a été supprimée avec succès." },
+                    { "SeasonNotFound", "Saison non trouvée." },
+                    { "InjectionFailed", "Injection échouée:" },
+                    { "LanguageSelection", "Please select your language / Veuillez sélectionner votre langue:" },
+                    { "English", "[1] English" },
+                    { "French", "[2] Français" },
+                    { "DllMoveSuccess", "DLL déplacé et renommé avec succès vers le chemin cible." },
+                    { "DllMoveFailed", "Le déplacement et le renommage du DLL vers le chemin cible ont échoué." },
+                    { "RedirectDllInjection", "Le SSL a ete injecte au jeu." },
+                    { "RedirectDllInjectionFailed", "Le SSL est manquant." },
+                    { "GameserverDllInjection", "Le Gameserveur a ete injecte au jeu." },
+                    { "GameserverDllInjectionFailed", "Le Gameserveur est manquant." },
+                    { "Restart", "La partie est termine, restart..." }
+                }
+            }
+        };
+
+        public static string GetMessage(string key)
+        {
+            return messages[currentLanguage].ContainsKey(key) ? messages[currentLanguage][key] : key;
+        }
 
         //Kill Process pour restart le GS
         //Kill Process for restart the GS
-        public static void SafeKillProcess(string processName) 
+        public static void SafeKillProcess(string processName)
         {
             try
             {
@@ -40,6 +119,7 @@ namespace GalaxiaFN_AutoRestart
         static void Main(string[] args)
         {
             Console.Title = "GalaxiaFN Console Launcher";
+            SelectLanguage();
             LoadSeasons();
 
             while (true)
@@ -63,47 +143,67 @@ namespace GalaxiaFN_AutoRestart
                 {
                     //Choisir l'action à faire
                     //Choose which action to do
-                    Console.WriteLine("Veuillez répondre uniquement par 0, 1 ou 2");
+                    Console.WriteLine(GetMessage("SelectAction"));
                     Thread.Sleep(2000);
                     Console.Clear();
                 }
             }
         }
 
+        static void SelectLanguage()
+        {
+            Console.WriteLine(GetMessage("LanguageSelection"));
+            Console.WriteLine(GetMessage("English"));
+            Console.WriteLine(GetMessage("French"));
+            Console.Write(">> ");
+            string langChoice = Console.ReadLine();
+
+            if (langChoice == "2")
+            {
+                currentLanguage = "fr";
+            }
+            else
+            {
+                currentLanguage = "en";
+            }
+
+            Console.Clear();
+        }
+
         static void ShowMainMenu()
         {
             Console.ForegroundColor = ConsoleColor.Green;
-            Console.WriteLine("[+] Bienvenue sur GalaxiaFN Console, un programme pour lancer des anciennes Saisons de Fortnite et pour jouer dessus.");
+            Console.WriteLine(GetMessage("Welcome"));
             Console.ForegroundColor = ConsoleColor.White;
-            Console.WriteLine("[0] Ajouter une version de Fortnite");
-            Console.WriteLine("[1] Lancer une version de Fortnite");
-            Console.WriteLine("[2] Supprimer une version de Fortnite");
+            Console.WriteLine(GetMessage("AddVersion"));
+            Console.WriteLine(GetMessage("LaunchVersion"));
+            Console.WriteLine(GetMessage("RemoveVersion"));
             Console.Write(">> ");
         }
 
         static void AddSeason()
         {
             Console.Clear();
-            Console.WriteLine("Veuillez mettre le chemin de votre version ici:"); //Path
+            Console.WriteLine(GetMessage("AddPath"));
             Console.Write(">> ");
             string path = Console.ReadLine();
 
-            Console.WriteLine("Veuillez donner un nom pour cette saison:"); //Name
+            Console.WriteLine(GetMessage("AddName"));
             Console.Write(">> ");
             string name = Console.ReadLine();
 
-            Console.WriteLine("Quel email voulez-vous mettre?"); //Email (pseudo@. if on lawinV1)
+            Console.WriteLine(GetMessage("AddEmail"));
             Console.Write(">> ");
             string email = Console.ReadLine();
 
-            Console.WriteLine("Quel mot de passe voulez-vous ajouter?"); //Password (whatever you want if on lawinV1)
+            Console.WriteLine(GetMessage("AddPassword"));
             Console.Write(">> ");
             string password = Console.ReadLine();
 
             seasons[name] = (path, email, password);
             SaveSeasons();
 
-            Console.WriteLine("Votre chemin, pseudo et mot de passe ont bien été enregistrés correctement!"); //Everything is saved in seasons.ini
+            Console.WriteLine(GetMessage("SaveConfirmation"));
             Console.Clear();
         }
 
@@ -111,18 +211,18 @@ namespace GalaxiaFN_AutoRestart
         {
             if (seasons.Count == 0)
             {
-                Console.WriteLine("Aucune saison n'a été ajoutée.");
+                Console.WriteLine(GetMessage("NoSeasons"));
                 return;
             }
 
             Console.Clear();
-            Console.WriteLine("Saisons disponibles:");
+            Console.WriteLine(GetMessage("AvailableSeasons"));
             foreach (var season in seasons.Keys)
             {
                 Console.WriteLine($"- {season}");
             }
 
-            Console.WriteLine("Veuillez séléctionner la saison que vous voulez lancer par son nom:");
+            Console.WriteLine(GetMessage("SelectSeason"));
             Console.Write(">> ");
             string selectedSeason = Console.ReadLine();
 
@@ -130,53 +230,28 @@ namespace GalaxiaFN_AutoRestart
             {
                 Console.Clear();
                 var season = seasons[selectedSeason];
-                Console.WriteLine($"Lancement de la saison: {selectedSeason} avec le chemin: {season.Path}");
+                Console.WriteLine($"{GetMessage("Launching")} {selectedSeason}");
 
                 while (true)
                 {
                     LaunchGameInstance(season);
-                    Thread.Sleep(2000); // Attendre 2 secondes avant de relancer   Wait 2 seconds before restarting
+                    Thread.Sleep(2000); // Wait 2 seconds before restarting
                 }
             }
             else
             {
-                Console.WriteLine("Saison non trouvée.");
+                Console.WriteLine(GetMessage("SeasonNotFound"));
             }
 
             Console.Clear();
             ShowMainMenu();
-        }
-        public static void Inject(int pid, string path)
-        {
-            if (!File.Exists(path))
-            {
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine($"[!] Could not find {path.Split('\\').Last()}. Exiting in 3 seconds.");
-                Thread.Sleep(3000);
-                Environment.Exit(0);
-                return;
-            }
-
-            try
-            {
-                IntPtr hProcess = Win32.OpenProcess(1082, false, pid);
-                IntPtr procAdress = Win32.GetProcAddress(Win32.GetModuleHandle("kernel32.dll"), "LoadLibraryA");
-                uint num = checked((uint)((path.Length + 1) * Marshal.SizeOf(typeof(char))));
-                IntPtr intPtr = Win32.VirtualAllocEx(hProcess, IntPtr.Zero, num, 12288U, 4U);
-                UIntPtr uintPtr;
-                Win32.WriteProcessMemory(hProcess, intPtr, Encoding.Default.GetBytes(path), num, out uintPtr);
-                Win32.CreateRemoteThread(hProcess, IntPtr.Zero, 0U, procAdress, intPtr, 0U, IntPtr.Zero);
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Injection failed: {ex.Message}"); //retour d'erreur  Callback error
-            }
         }
 
         static void LaunchGameInstance((string Path, string Username, string Password) season)
         {
             try
             {
+
                 string launcherPath = Path.Combine(season.Path, "FortniteGame", "Binaries", "Win64", "FortniteLauncher.exe");
                 if (!File.Exists(launcherPath))
                 {
@@ -187,7 +262,7 @@ namespace GalaxiaFN_AutoRestart
 
                 FortniteLauncher.StartInfo.FileName = launcherPath;
                 FortniteLauncher.Start();
-                ProcessExtension.Suspend(FortniteLauncher);
+                ProcessExtension.Suspend(FortniteLauncher); // Will suspend it to make it work
 
                 string eacPath = Path.Combine(season.Path, "FortniteGame", "Binaries", "Win64", "FortniteClient-Win64-Shipping_EAC.exe");
                 if (!File.Exists(eacPath))
@@ -199,49 +274,54 @@ namespace GalaxiaFN_AutoRestart
 
                 FortniteEAC.StartInfo.FileName = eacPath;
                 FortniteEAC.Start();
-                ProcessExtension.Suspend(FortniteEAC);
+                ProcessExtension.Suspend(FortniteEAC); // Will suspend it to make it work
 
-                
 
                 Process Fortnite = new Process();
                 Fortnite.StartInfo.FileName = Path.Combine(season.Path, "FortniteGame/Binaries/Win64/FortniteClient-Win64-Shipping.exe");
-                Fortnite.StartInfo.RedirectStandardOutput = true;  
+                Fortnite.StartInfo.RedirectStandardOutput = true;
                 Fortnite.StartInfo.UseShellExecute = false;
                 Fortnite.StartInfo.Arguments = $@"-epicapp=Fortnite -epicenv=Prod -epiclocale=en-us -epicportal -skippatchcheck -nobe -fromfl=eac -log -nosplash -nosound -nullrhi -useolditemcards -fltoken=3db3ba5dcbd2e16703f3978d -caldera=eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50X2lkIjoiYmU5ZGE1YzJmYmVhNDQwN2IyZjQwZWJhYWQ4NTlhZDQiLCJnZW5lcmF0ZWQiOjE2Mzg3MTcyNzgsImNhbGRlcmFHdWlkIjoiMzgxMGI4NjMtMmE2NS00NDU3LTliNTgtNGRhYjNiNDgyYTg2IiwiYWNQcm92aWRlciI6IkVhc3lBbnRpQ2hlYXQiLCJub3RlcyI6IiIsImZhbGxiYWNrIjpmYWxzZX0.VAWQB67RTxhiWOxx7DBjnzDnXyyEnX7OljJm-j2d88G_WgwQ9wrE6lwMEHZHjBd1ISJdUO1UVUqkfLdU5nofBQ -AUTH_LOGIN={season.Username} -AUTH_PASSWORD={season.Password} -AUTH_TYPE=epic";
+                // if you want to enable the view of the game, delete -log -nosplash -nosound -nullrhi -useolditemcards from Fortnite.StartInfo.Arguments :)
                 Fortnite.Start();
 
-                
-                Process injector = new Process();
-                injector.StartInfo.FileName = $@"{idkkk}\\inj\\injector.exe";
-                injector.StartInfo.Arguments = $@"-p {Fortnite.Id} -i redirect.dll "; // remplacer son ssl bypass dans \inj\redirect.dll  Replace your ssl in \inj\redirect.dll
-                injector.StartInfo.CreateNoWindow = true; injector.StartInfo.RedirectStandardOutput = false;
-                injector.StartInfo.UseShellExecute = false;
-                injector.StartInfo.WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden;
-                injector.Start(); //inject redirect dll
+                string dllDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+
+                if (!File.Exists(Path.Combine(dllDirectory, "redirect.dll")))
+                {
+                    Console.WriteLine(GetMessage("RedirectDllInjectionFailed")); 
+                    return;
+                }
+
+                if (!File.Exists(Path.Combine(dllDirectory, "gameserver.dll")))
+                {
+                    Console.WriteLine(GetMessage("GameserverDllInjectionFailed"));
+                    return;
+                }
+
+                try
+                {
+                    Win32.InjectDll(Fortnite.Id, Path.Combine(dllDirectory, "redirect.dll")); // Injection of your ssl, don't forget to add it
+                    Console.WriteLine(GetMessage("RedirectDllInjection"));
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Erreur lors de l'injection: {ex.Message}");
+                }
 
                 string outputLine;
                 while ((outputLine = Fortnite.StandardOutput.ReadLine()) != null)
                 {
                     if (outputLine.Contains("Region "))
                     {
-                        Thread.Sleep(3500);
+                        Thread.Sleep(5000);
+                        Win32.InjectDll(Fortnite.Id, Path.Combine(dllDirectory, "gameserver.dll")); // Injection of your Gameserver, don't forget to add it
 
-                        Process inj = new Process();
-                        inj.StartInfo.FileName = $@"{idkkk}\\inj\\injector.exe";
-                        inj.StartInfo.Arguments = $@"-p {Fortnite.Id} -i gameserver.dll "; // remplacer son ssl dans \inj\gameserver.dll  Replace your ssl in \inj\gameserver.dll
-                        inj.StartInfo.CreateNoWindow = true; inj.StartInfo.RedirectStandardOutput = false;
-                        inj.StartInfo.UseShellExecute = false;
-                        inj.StartInfo.WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden;
-                        inj.Start();
-
-                        Console.WriteLine("Le dll a été injecte");
+                        Console.WriteLine(GetMessage("GameserverDllInjection"));
                     }
                 }
 
-                /*Fortnite.BeginOutputReadLine();
-                Fortnite.BeginErrorReadLine();*/
-
-                Fortnite.WaitForExit();
+                Fortnite.WaitForExit(); // The game will restart if the client is kill, don't forget to add a function in your gs to make the process kill when your game is finished (:
 
                 SafeKillProcess("EpicGamesLauncher");
                 SafeKillProcess("EpicWebHelper");
@@ -256,7 +336,8 @@ namespace GalaxiaFN_AutoRestart
                 SafeKillProcess("FortniteClient-Win64-Shipping");
                 SafeKillProcess("EasyAntiCheat_EOS");
                 SafeKillProcess("EasyAntiCheat_Launcher");
-                Console.WriteLine("La game est fini. Restart...");
+                Console.WriteLine(GetMessage("Restart"));
+
             }
             catch (Exception ex)
             {
@@ -268,18 +349,18 @@ namespace GalaxiaFN_AutoRestart
         {
             if (seasons.Count == 0)
             {
-                Console.WriteLine("Aucune saison n'a été ajoutée.");
+                Console.WriteLine(GetMessage("NoSeasons"));
                 return;
             }
 
             Console.Clear();
-            Console.WriteLine("Saisons disponibles:");
+            Console.WriteLine(GetMessage("AvailableSeasons"));
             foreach (var season in seasons.Keys)
             {
                 Console.WriteLine($"- {season}");
             }
 
-            Console.WriteLine("Veuillez sélectionner la saison que vous voulez supprimer par son nom:");
+            Console.WriteLine(GetMessage("RemoveSeasonPrompt"));
             Console.Write(">> ");
             string selectedSeason = Console.ReadLine();
 
@@ -287,15 +368,16 @@ namespace GalaxiaFN_AutoRestart
             {
                 seasons.Remove(selectedSeason);
                 SaveSeasons();
-                Console.WriteLine($"La saison {selectedSeason} a été supprimée avec succès.");
+                Console.WriteLine(GetMessage("RemoveSuccess"));
             }
             else
             {
-                Console.WriteLine("Saison non trouvée.");
+                Console.WriteLine(GetMessage("SeasonNotFound"));
             }
 
             Console.Clear();
         }
+
 
         //ini-parser seasons.ini
         static void LoadSeasons()
@@ -317,7 +399,7 @@ namespace GalaxiaFN_AutoRestart
             }
         }
 
-        //ini-parser seasons.ini
+        // Save your info
         static void SaveSeasons()
         {
             var parser = new FileIniDataParser();
