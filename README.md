@@ -15,9 +15,10 @@ If an Epic Games employee want to contact me, they can contact me with discord: 
 ## INSTALLATION
 
 1. Download the Project
-2. Launch the program
-3. Put your SSL (redirect.dll) and your Gameserver (gameserver.dll) in the folder **inj**
-4. Open the application and follow the instructions
+2. Replace **debug** to **release** and **Any CPU** to **x64**
+3. Launch the program
+4. Put your SSL (redirect.dll) and your Gameserver (gameserver.dll) in the same folder as the program
+5. Open the application and follow the instructions
 
 ***If you need help with the autohost, you can contact me via [Discord](https://discord.gg/galaxiafn-1141260363715854336) or you can create a message in issues***
 
