@@ -234,6 +234,9 @@ namespace GalaxiaFN_AutoRestart
 
                 while (true)
                 {
+                    // Lancer une nouvelle console pour les logs
+                    //StartNewConsoleForLogs(selectedSeason, season);
+
                     LaunchGameInstance(season);
                     Thread.Sleep(2000); // Wait 2 seconds before restarting
                 }
@@ -245,6 +248,26 @@ namespace GalaxiaFN_AutoRestart
 
             Console.Clear();
             ShowMainMenu();
+        }
+
+        static void StartNewConsoleForLogs(string seasonName, (string Path, string Username, string Password) season)
+        {
+            try
+            {
+                // Lancer une nouvelle console qui exécute le même programme avec des arguments spécifiques
+                ProcessStartInfo startInfo = new ProcessStartInfo
+                {
+                    FileName = Assembly.GetExecutingAssembly().Location,
+                    Arguments = $"log {seasonName}",
+                    UseShellExecute = true
+                };
+
+                Process.Start(startInfo);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Failed to start log window: {ex.Message}");
+            }
         }
 
         static void LaunchGameInstance((string Path, string Username, string Password) season)
