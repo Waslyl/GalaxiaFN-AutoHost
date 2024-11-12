@@ -290,17 +290,48 @@ namespace GalaxiaFN_AutoRestart
                 if (!File.Exists(Path.Combine(dllDirectory, "redirect.dll")))
                 {
                     Console.WriteLine(GetMessage("RedirectDllInjectionFailed"));
-                    return;
+
+                    SafeKillProcess("EpicGamesLauncher");
+                    SafeKillProcess("EpicWebHelper");
+                    SafeKillProcess("CrashReportClient");
+                    SafeKillProcess("FortniteLauncher");
+                    SafeKillProcess("FortniteClient-Win64-Shipping");
+                    SafeKillProcess("EasyAntiCheat_EOS");
+                    SafeKillProcess("EpicGamesLauncher");
+                    SafeKillProcess("EpicWebHelper");
+                    SafeKillProcess("CrashReportClient");
+                    SafeKillProcess("FortniteLauncher");
+                    SafeKillProcess("FortniteClient-Win64-Shipping");
+                    SafeKillProcess("EasyAntiCheat_EOS");
+                    SafeKillProcess("EasyAntiCheat_Launcher");
+
+                    Environment.Exit(0);
                 }
 
                 if (!File.Exists(Path.Combine(dllDirectory, "gameserver.dll")))
                 {
                     Console.WriteLine(GetMessage("GameserverDllInjectionFailed"));
-                    return;
+
+                    SafeKillProcess("EpicGamesLauncher");
+                    SafeKillProcess("EpicWebHelper");
+                    SafeKillProcess("CrashReportClient");
+                    SafeKillProcess("FortniteLauncher");
+                    SafeKillProcess("FortniteClient-Win64-Shipping");
+                    SafeKillProcess("EasyAntiCheat_EOS");
+                    SafeKillProcess("EpicGamesLauncher");
+                    SafeKillProcess("EpicWebHelper");
+                    SafeKillProcess("CrashReportClient");
+                    SafeKillProcess("FortniteLauncher");
+                    SafeKillProcess("FortniteClient-Win64-Shipping");
+                    SafeKillProcess("EasyAntiCheat_EOS");
+                    SafeKillProcess("EasyAntiCheat_Launcher");
+
+                    Environment.Exit(0);
                 }
 
                 try
                 {
+                    Thread.Sleep(3000);
                     Win32.InjectDll(Fortnite.Id, Path.Combine(dllDirectory, "redirect.dll")); // Injection of your ssl, don't forget to add it
                     Console.WriteLine(GetMessage("RedirectDllInjection"));
                 }
@@ -318,6 +349,8 @@ namespace GalaxiaFN_AutoRestart
                         Win32.InjectDll(Fortnite.Id, Path.Combine(dllDirectory, "gameserver.dll")); // Injection of your Gameserver, don't forget to add it
 
                         Console.WriteLine(GetMessage("GameserverDllInjection"));
+
+                        break;
                     }
                 }
 
