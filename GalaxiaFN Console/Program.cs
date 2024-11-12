@@ -282,6 +282,7 @@ namespace GalaxiaFN_AutoRestart
                 Fortnite.StartInfo.RedirectStandardOutput = true;
                 Fortnite.StartInfo.UseShellExecute = false;
                 Fortnite.StartInfo.Arguments = $@"-epicapp=Fortnite -epicenv=Prod -epiclocale=en-us -epicportal -skippatchcheck -nobe -fromfl=eac -log -nosplash -nosound -nullrhi -useolditemcards -fltoken=3db3ba5dcbd2e16703f3978d -caldera=eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50X2lkIjoiYmU5ZGE1YzJmYmVhNDQwN2IyZjQwZWJhYWQ4NTlhZDQiLCJnZW5lcmF0ZWQiOjE2Mzg3MTcyNzgsImNhbGRlcmFHdWlkIjoiMzgxMGI4NjMtMmE2NS00NDU3LTliNTgtNGRhYjNiNDgyYTg2IiwiYWNQcm92aWRlciI6IkVhc3lBbnRpQ2hlYXQiLCJub3RlcyI6IiIsImZhbGxiYWNrIjpmYWxzZX0.VAWQB67RTxhiWOxx7DBjnzDnXyyEnX7OljJm-j2d88G_WgwQ9wrE6lwMEHZHjBd1ISJdUO1UVUqkfLdU5nofBQ -AUTH_LOGIN={season.Username} -AUTH_PASSWORD={season.Password} -AUTH_TYPE=epic";
+                //Fortnite.StartInfo.Arguments = $@"-epicapp=Fortnite -epicenv=Prod -epiclocale=en-us -epicportal -skippatchcheck -nobe -fromfl=eac -fltoken=3db3ba5dcbd2e16703f3978d -caldera=eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50X2lkIjoiYmU5ZGE1YzJmYmVhNDQwN2IyZjQwZWJhYWQ4NTlhZDQiLCJnZW5lcmF0ZWQiOjE2Mzg3MTcyNzgsImNhbGRlcmFHdWlkIjoiMzgxMGI4NjMtMmE2NS00NDU3LTliNTgtNGRhYjNiNDgyYTg2IiwiYWNQcm92aWRlciI6IkVhc3lBbnRpQ2hlYXQiLCJub3RlcyI6IiIsImZhbGxiYWNrIjpmYWxzZX0.VAWQB67RTxhiWOxx7DBjnzDnXyyEnX7OljJm-j2d88G_WgwQ9wrE6lwMEHZHjBd1ISJdUO1UVUqkfLdU5nofBQ -AUTH_LOGIN={season.Username} -AUTH_PASSWORD={season.Password} -AUTH_TYPE=epic";
                 // if you want to enable the view of the game, delete -log -nosplash -nosound -nullrhi -useolditemcards from Fortnite.StartInfo.Arguments :)
                 Fortnite.Start();
 
@@ -340,17 +341,17 @@ namespace GalaxiaFN_AutoRestart
                     Console.WriteLine($"Erreur lors de l'injection: {ex.Message}");
                 }
 
+                bool isDllInjected = false;
                 string outputLine;
                 while ((outputLine = Fortnite.StandardOutput.ReadLine()) != null)
                 {
-                    if (outputLine.Contains("Region "))
+                    if (!isDllInjected && outputLine.Contains("Region "))
                     {
                         Thread.Sleep(5000);
                         Win32.InjectDll(Fortnite.Id, Path.Combine(dllDirectory, "gameserver.dll")); // Injection of your Gameserver, don't forget to add it
 
                         Console.WriteLine(GetMessage("GameserverDllInjection"));
-
-                        break;
+                        isDllInjected = true;
                     }
                 }
 
