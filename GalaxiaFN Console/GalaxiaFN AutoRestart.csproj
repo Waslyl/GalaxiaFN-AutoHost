@@ -71,6 +71,7 @@
   <ItemGroup>
     <Compile Include="DLLInjector.cs" />
     <Compile Include="ProcessExtension.cs" />
+    <Compile Include="ProcessKill.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Settings.Designer.cs">

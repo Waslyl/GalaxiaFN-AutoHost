@@ -2,22 +2,22 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using System.Threading;
+using System.Threading.Tasks;
 using IniParser;
 using IniParser.Model;
+using GalaxiaFN_AutoRestart.ProcessKill;
 
 namespace GalaxiaFN_AutoRestart
 {
     internal class Program
     {
-        static String idkkk = AppDomain.CurrentDomain.BaseDirectory;
-        static Process FortniteClient = new Process();
         static Process FortniteEAC = new Process();
         static Process FortniteLauncher = new Process();
         static Dictionary<string, (string Path, string Username, string Password)> seasons = new Dictionary<string, (string, string, string)>();
         static string currentLanguage = "en";
-        static String baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
 
         //Dictionary will be used to add different language support, more languages will be added in the future if I have time :)
         static Dictionary<string, Dictionary<string, string>> messages = new Dictionary<string, Dictionary<string, string>>
@@ -97,23 +97,6 @@ namespace GalaxiaFN_AutoRestart
         public static string GetMessage(string key)
         {
             return messages[currentLanguage].ContainsKey(key) ? messages[currentLanguage][key] : key;
-        }
-
-        //Kill Process pour restart le GS
-        //Kill Process for restart the GS
-        public static void SafeKillProcess(string processName)
-        {
-            try
-            {
-                Process[] processesByName = Process.GetProcessesByName(processName);
-                for (int i = 0; i < processesByName.Length; i++)
-                {
-                    processesByName[i].Kill();
-                }
-            }
-            catch
-            {
-            }
         }
 
         static void Main(string[] args)
@@ -211,7 +194,10 @@ namespace GalaxiaFN_AutoRestart
         {
             if (seasons.Count == 0)
             {
+                Console.ForegroundColor = ConsoleColor.Yellow;
                 Console.WriteLine(GetMessage("NoSeasons"));
+                Thread.Sleep(2000);
+                Console.Clear();
                 return;
             }
 
@@ -252,9 +238,25 @@ namespace GalaxiaFN_AutoRestart
             try
             {
 
+                string dllDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+                if (!File.Exists(Path.Combine(dllDirectory, "redirect.dll")))
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine(GetMessage("RedirectDllInjectionFailed"));
+                    return;
+                }
+
+                if (!File.Exists(Path.Combine(dllDirectory, "gameserver.dll")))
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine(GetMessage("GameserverDllInjectionFailed"));
+                    return;
+                }
+
                 string launcherPath = Path.Combine(season.Path, "FortniteGame", "Binaries", "Win64", "FortniteLauncher.exe");
                 if (!File.Exists(launcherPath))
                 {
+                    Console.ForegroundColor = ConsoleColor.Red;
                     Console.WriteLine($"Le fichier {launcherPath} est introuvable.");
                     return;
                 }
@@ -276,106 +278,105 @@ namespace GalaxiaFN_AutoRestart
                 FortniteEAC.Start();
                 ProcessExtension.Suspend(FortniteEAC); // Will suspend it to make it work
 
-
                 Process Fortnite = new Process();
                 Fortnite.StartInfo.FileName = Path.Combine(season.Path, "FortniteGame/Binaries/Win64/FortniteClient-Win64-Shipping.exe");
                 Fortnite.StartInfo.RedirectStandardOutput = true;
+                Fortnite.StartInfo.RedirectStandardError = true;
                 Fortnite.StartInfo.UseShellExecute = false;
+                Fortnite.StartInfo.CreateNoWindow = true;
+                Fortnite.StartInfo.Verb = "runas";
                 Fortnite.StartInfo.Arguments = $@"-epicapp=Fortnite -epicenv=Prod -epiclocale=en-us -epicportal -skippatchcheck -nobe -fromfl=eac -log -nosplash -nosound -nullrhi -useolditemcards -fltoken=3db3ba5dcbd2e16703f3978d -caldera=eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50X2lkIjoiYmU5ZGE1YzJmYmVhNDQwN2IyZjQwZWJhYWQ4NTlhZDQiLCJnZW5lcmF0ZWQiOjE2Mzg3MTcyNzgsImNhbGRlcmFHdWlkIjoiMzgxMGI4NjMtMmE2NS00NDU3LTliNTgtNGRhYjNiNDgyYTg2IiwiYWNQcm92aWRlciI6IkVhc3lBbnRpQ2hlYXQiLCJub3RlcyI6IiIsImZhbGxiYWNrIjpmYWxzZX0.VAWQB67RTxhiWOxx7DBjnzDnXyyEnX7OljJm-j2d88G_WgwQ9wrE6lwMEHZHjBd1ISJdUO1UVUqkfLdU5nofBQ -AUTH_LOGIN={season.Username} -AUTH_PASSWORD={season.Password} -AUTH_TYPE=epic";
                 //Fortnite.StartInfo.Arguments = $@"-epicapp=Fortnite -epicenv=Prod -epiclocale=en-us -epicportal -skippatchcheck -nobe -fromfl=eac -fltoken=3db3ba5dcbd2e16703f3978d -caldera=eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50X2lkIjoiYmU5ZGE1YzJmYmVhNDQwN2IyZjQwZWJhYWQ4NTlhZDQiLCJnZW5lcmF0ZWQiOjE2Mzg3MTcyNzgsImNhbGRlcmFHdWlkIjoiMzgxMGI4NjMtMmE2NS00NDU3LTliNTgtNGRhYjNiNDgyYTg2IiwiYWNQcm92aWRlciI6IkVhc3lBbnRpQ2hlYXQiLCJub3RlcyI6IiIsImZhbGxiYWNrIjpmYWxzZX0.VAWQB67RTxhiWOxx7DBjnzDnXyyEnX7OljJm-j2d88G_WgwQ9wrE6lwMEHZHjBd1ISJdUO1UVUqkfLdU5nofBQ -AUTH_LOGIN={season.Username} -AUTH_PASSWORD={season.Password} -AUTH_TYPE=epic";
-                // if you want to enable the view of the game, delete -log -nosplash -nosound -nullrhi -useolditemcards from Fortnite.StartInfo.Arguments :)
+                // if you want to enable the Game UI, delete -log -nosplash -nosound -nullrhi -useolditemcards from Fortnite.StartInfo.Arguments :)
+                
+
+                bool injectedGameserver = false;
+                var injectionTask = new TaskCompletionSource<bool>();
+
+                Fortnite.OutputDataReceived += async (sender, e) =>
+                {
+                    if (e.Data != null)
+                    {
+                        if (e.Data.Contains("Region ") && !injectedGameserver)
+                        {
+                            injectedGameserver = true;
+                            Console.ForegroundColor = ConsoleColor.Blue;
+                            Console.WriteLine("Output Region defined");
+
+                            // Attendre 10 secondes avant l'injection
+                            await Task.Delay(10000);
+
+                            await Task.Run(() =>
+                            {
+                                try
+                                {
+                                    Console.ForegroundColor = ConsoleColor.Green;
+                                    Win32.InjectDll(Fortnite.Id, Path.Combine(dllDirectory, "gameserver.dll"));
+                                    Console.WriteLine(GetMessage("GameserverDllInjection"));
+                                    injectionTask.SetResult(true);
+                                }
+                                catch (Exception ex)
+                                {
+                                    Console.ForegroundColor = ConsoleColor.Red;
+                                    Console.WriteLine($"Erreur lors de l'injection du gameserver: {ex.Message}");
+                                    injectionTask.SetResult(false);
+                                }
+                            });
+                        }
+
+                        string[] LoginFailureErrs = { "port 3551 failed: Connection refused", "Unable to login to Fortnite servers", "HTTP 400 response from ", "Network failure when attempting to check platform restrictions", "UOnlineAccountCommon::ForceLogout" };
+                        if (LoginFailureErrs.Any(err => e.Data.Contains(err)))
+                        {
+                            Console.ForegroundColor = ConsoleColor.Red;
+                            Console.WriteLine($"A token error occured, restarting server, Error: {e.Data}");
+                            await Task.Delay(5000);
+                            ProcessKiller.KillProcessByName(Path.GetFileNameWithoutExtension(Fortnite.StartInfo.FileName));
+                        }
+                    }
+                };
+
+                Fortnite.ErrorDataReceived += (sender, e) =>
+                {
+                    if (e.Data != null)
+                    {
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.WriteLine($"Error: {e.Data}");
+                    }
+                };
+
                 Fortnite.Start();
-
-                string dllDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-
-                if (!File.Exists(Path.Combine(dllDirectory, "redirect.dll")))
-                {
-                    Console.WriteLine(GetMessage("RedirectDllInjectionFailed"));
-
-                    SafeKillProcess("EpicGamesLauncher");
-                    SafeKillProcess("EpicWebHelper");
-                    SafeKillProcess("CrashReportClient");
-                    SafeKillProcess("FortniteLauncher");
-                    SafeKillProcess("FortniteClient-Win64-Shipping");
-                    SafeKillProcess("EasyAntiCheat_EOS");
-                    SafeKillProcess("EpicGamesLauncher");
-                    SafeKillProcess("EpicWebHelper");
-                    SafeKillProcess("CrashReportClient");
-                    SafeKillProcess("FortniteLauncher");
-                    SafeKillProcess("FortniteClient-Win64-Shipping");
-                    SafeKillProcess("EasyAntiCheat_EOS");
-                    SafeKillProcess("EasyAntiCheat_Launcher");
-
-                    Environment.Exit(0);
-                }
-
-                if (!File.Exists(Path.Combine(dllDirectory, "gameserver.dll")))
-                {
-                    Console.WriteLine(GetMessage("GameserverDllInjectionFailed"));
-
-                    SafeKillProcess("EpicGamesLauncher");
-                    SafeKillProcess("EpicWebHelper");
-                    SafeKillProcess("CrashReportClient");
-                    SafeKillProcess("FortniteLauncher");
-                    SafeKillProcess("FortniteClient-Win64-Shipping");
-                    SafeKillProcess("EasyAntiCheat_EOS");
-                    SafeKillProcess("EpicGamesLauncher");
-                    SafeKillProcess("EpicWebHelper");
-                    SafeKillProcess("CrashReportClient");
-                    SafeKillProcess("FortniteLauncher");
-                    SafeKillProcess("FortniteClient-Win64-Shipping");
-                    SafeKillProcess("EasyAntiCheat_EOS");
-                    SafeKillProcess("EasyAntiCheat_Launcher");
-
-                    Environment.Exit(0);
-                }
+                Fortnite.BeginOutputReadLine();
+                Fortnite.BeginErrorReadLine();
 
                 try
                 {
-                    Thread.Sleep(3000);
-                    Win32.InjectDll(Fortnite.Id, Path.Combine(dllDirectory, "redirect.dll")); // Injection of your ssl, don't forget to add it
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    Win32.InjectDll(Fortnite.Id, Path.Combine(dllDirectory, "redirect.dll"));
                     Console.WriteLine(GetMessage("RedirectDllInjection"));
                 }
                 catch (Exception ex)
                 {
+                    Console.ForegroundColor = ConsoleColor.Red;
                     Console.WriteLine($"Erreur lors de l'injection: {ex.Message}");
-                }
-
-                bool isDllInjected = false;
-                string outputLine;
-                while ((outputLine = Fortnite.StandardOutput.ReadLine()) != null)
-                {
-                    if (!isDllInjected && outputLine.Contains("Region "))
-                    {
-                        Thread.Sleep(5000);
-                        Win32.InjectDll(Fortnite.Id, Path.Combine(dllDirectory, "gameserver.dll")); // Injection of your Gameserver, don't forget to add it
-
-                        Console.WriteLine(GetMessage("GameserverDllInjection"));
-                        isDllInjected = true;
-                    }
                 }
 
                 Fortnite.WaitForExit(); // The game will restart if the client is kill, don't forget to add a function in your gs to make the process kill when your game is finished (:
 
-                SafeKillProcess("EpicGamesLauncher");
-                SafeKillProcess("EpicWebHelper");
-                SafeKillProcess("CrashReportClient");
-                SafeKillProcess("FortniteLauncher");
-                SafeKillProcess("FortniteClient-Win64-Shipping");
-                SafeKillProcess("EasyAntiCheat_EOS");
-                SafeKillProcess("EpicGamesLauncher");
-                SafeKillProcess("EpicWebHelper");
-                SafeKillProcess("CrashReportClient");
-                SafeKillProcess("FortniteLauncher");
-                SafeKillProcess("FortniteClient-Win64-Shipping");
-                SafeKillProcess("EasyAntiCheat_EOS");
-                SafeKillProcess("EasyAntiCheat_Launcher");
+                ProcessKiller.KillProcessByName("EpicGamesLauncher");
+                ProcessKiller.KillProcessByName("EpicWebHelper");
+                ProcessKiller.KillProcessByName("CrashReportClient");
+                ProcessKiller.KillProcessByName("FortniteLauncher");
+                ProcessKiller.KillProcessByName("FortniteClient-Win64-Shipping");
+                ProcessKiller.KillProcessByName("EasyAntiCheat_EOS");
+                ProcessKiller.KillProcessByName("FortniteClient-Win64-Shipping_EAC");
+
                 Console.WriteLine(GetMessage("Restart"));
 
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Une exception s'est produite: {ex.Message}");
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine($"An error occured: {ex.Message}");
             }
         }
 
